@@ -3,7 +3,15 @@ import * as React from "react";
 import {RouterContext} from "./routerComponent";
 import {State} from "./state";
 
-// todo: make TComponentProps more type safe.  can we infer Props?
+export interface IRouteContext<T extends State> {
+	state: T | null;
+}
+
+export const RouteContext = React.createContext<IRouteContext<any>>({
+	state: null,
+});
+
+
 export interface IRouteProps {
 	/**
 	 * The State to try to match to the current state we are processing
@@ -17,8 +25,7 @@ export interface IRouteProps {
 	exact?: boolean;
 }
 
-export class Route<TComponentProps extends Props, Props extends object, TStateProps, TStateParams> extends
-	React.Component<IRouteProps, {}> {
+export class Route<TComponentProps extends Props, Props extends object, TStateProps, TStateParams> extends React.Component<IRouteProps, {}> {
 	public render() {
 		const {children, state, exact} = this.props;
 
@@ -44,7 +51,11 @@ export class Route<TComponentProps extends Props, Props extends object, TStatePr
 										processedStates: routerContext.processedStates + 1,
 									}}
 								>
-									{children}
+									<RouteContext.Provider
+										value={{state: routerContext.states[routerContext.processedStates]}}
+									>
+										{children}
+									</RouteContext.Provider>
 								</RouterContext.Provider>
 							);
 						}
