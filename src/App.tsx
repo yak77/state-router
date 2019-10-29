@@ -9,6 +9,8 @@ import {HomeState} from "./states/homeState";
 import {Switch} from "./router/switch";
 import {AboutState} from "./states/aboutState";
 import {About} from "./components/about";
+import {PublicState} from "./states/publicState";
+import {Public} from "./components/public";
 
 class App extends Component {
   render() {
@@ -24,6 +26,9 @@ class App extends Component {
           </Route>
           <Route state={AboutState}>
             <About/>
+          </Route>
+          <Route state={PublicState}>
+            <Public/>
           </Route>
         </Switch>
       </RouterComponent>

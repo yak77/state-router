@@ -25,7 +25,7 @@ export interface IRouteProps {
 	exact?: boolean;
 }
 
-export class Route<TComponentProps extends Props, Props extends object, TStateProps, TStateParams> extends React.Component<IRouteProps, {}> {
+export class Route extends React.Component<IRouteProps, {}> {
 	public render() {
 		const {children, state, exact} = this.props;
 

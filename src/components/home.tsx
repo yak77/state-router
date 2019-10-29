@@ -15,8 +15,8 @@ export class Home extends React.Component<{}, {}> {
 					About
 				</button>
 				<br/>
-				<button>
-					Private
+				<button onClick={() => this.context.state.gotoPublic()}>
+					Public
 				</button>
 			</div>
 		);

@@ -18,13 +18,24 @@ export interface IRouterComponentProps {
 }
 
 export interface IRouterComponentState {
-	// states: State[];
+	states: State[];
 }
 
 export class RouterComponent extends React.Component<IRouterComponentProps, IRouterComponentState> {
+
+	constructor(props: Readonly<IRouterComponentProps>) {
+		super(props);
+		this.state = {
+			states: this.props.router.getStates(),
+		}
+	}
+
 	public componentDidMount(): void {
 		// todo: better way to update instead of using forceUpdate?
-		// this.props.router.registerForRouteChange(() => this.forceUpdate());
+		// this.props.router.registerForStateChange(() => this.forceUpdate());
+		this.props.router.registerForStateChange(() => {
+			this.setState({states: this.props.router.getStates()});
+		});
 	}
 
 	public render(): React.ReactNode {
