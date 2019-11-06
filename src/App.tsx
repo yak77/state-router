@@ -20,16 +20,12 @@ class App extends Component {
           Refresh
         </button>
         <br/>
+        -------------------------
+        <br/>
         <Switch>
-          <Route state={HomeState}>
-            <Home/>
-          </Route>
-          <Route state={AboutState}>
-            <About/>
-          </Route>
-          <Route state={PublicState}>
-            <Public/>
-          </Route>
+          <Route stateClass={HomeState} component={Home}/>
+          <Route stateClass={AboutState} component={About}/>
+          <Route stateClass={PublicState} component={Public}/>
         </Switch>
       </RouterComponent>
     );

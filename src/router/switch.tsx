@@ -26,8 +26,8 @@ export class Switch extends React.Component<ISwitchProps, {}> {
 								// 	matchedElement = element;
 								// } else if (element.type === Route) {
 								if (element.type === Route) {
-									const elementProps = element.props as IRouteProps;
-									if (routerContext.states[routerContext.processedStates].constructor === elementProps.state) {
+									const elementProps = element.props as IRouteProps<any>;
+									if (routerContext.states[routerContext.processedStates].constructor === elementProps.stateClass) {
 										matchedElement = element;
 									}
 								}

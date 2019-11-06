@@ -1,21 +1,23 @@
 import React from "react";
-import {RouteContext} from "../router/route";
 
-export class Home extends React.Component<{}, {}> {
-	static contextType = RouteContext;
+import {HomeState} from "../states/homeState";
+import {RouteComponent} from "../router/routeComponent";
 
+export class Home extends RouteComponent<HomeState> {
 	private _renders = 0;
 
 	render() {
+		const {state} = this.props;
+
 		return (
 			<div>
 				Home: {++this._renders}
 				<br/>
-				<button onClick={() => this.context.state.gotoAbout()}>
+				<button onClick={() => state.gotoAbout()}>
 					About
 				</button>
 				<br/>
-				<button onClick={() => this.context.state.gotoPublic()}>
+				<button onClick={() => state.gotoPublic()}>
 					Public
 				</button>
 			</div>

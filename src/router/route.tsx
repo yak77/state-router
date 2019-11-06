@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {RouterContext} from "./routerComponent";
 import {State} from "./state";
+import {IRouteComponentProps} from "./routeComponent";
 
 export interface IRouteContext<T extends State> {
 	state: T | null;
@@ -12,11 +13,13 @@ export const RouteContext = React.createContext<IRouteContext<any>>({
 });
 
 
-export interface IRouteProps {
+export interface IRouteProps<TState extends State> {
 	/**
 	 * The State to try to match to the current state we are processing
 	 */
-	state: State;
+	stateClass: new() => TState;
+	// component: RouteComponent<TState, any>;
+	component: React.ComponentType<IRouteComponentProps<TState>>;
 	/**
 	 * If exact is set to true, then this Route will only match if state is the last state to be
 	 * processed in the router's array of current states.  In other words if exact is true and there are
@@ -25,16 +28,16 @@ export interface IRouteProps {
 	exact?: boolean;
 }
 
-export class Route extends React.Component<IRouteProps, {}> {
+export class Route<TState extends State> extends React.Component<IRouteProps<TState>, {}> {
 	public render() {
-		const {children, state, exact} = this.props;
+		const {component, stateClass, exact} = this.props;
 
 		return (
 			<RouterContext.Consumer>
 				{(routerContext) => {
 					if ((routerContext.processedStates < routerContext.states.length) &&
-						(routerContext.states[routerContext.processedStates].constructor === state)) {
-						// const state = routerContext.states[routerContext.processedStates];
+						(routerContext.states[routerContext.processedStates].constructor === stateClass)) {
+						const state = routerContext.states[routerContext.processedStates] as TState;
 						if (!exact) {
 							// Inject the url into the props of the component.  Some libraries such as redux or mobx
 							// implement shouldComponentUpdate and could potentially block updates in the case where the url
@@ -44,20 +47,14 @@ export class Route extends React.Component<IRouteProps, {}> {
 							// change and consequently allowing the component's render method to be properly called.
 							// tslint:disable-next-line:variable-name
 							// ***** const ___injectedUrl = state.routeInfo.location.pathname;
-							return (
-								<RouterContext.Provider
-									value={{
-										states: routerContext.states,
-										processedStates: routerContext.processedStates + 1,
-									}}
-								>
-									<RouteContext.Provider
-										value={{state: routerContext.states[routerContext.processedStates]}}
-									>
-										{children}
-									</RouteContext.Provider>
-								</RouterContext.Provider>
-							);
+							return <RouterContext.Provider
+								value={{
+									states: routerContext.states,
+									processedStates: routerContext.processedStates + 1,
+								}}
+							>
+								{React.createElement(component, {state})}
+							</RouterContext.Provider>;
 						}
 					}
 					return null;

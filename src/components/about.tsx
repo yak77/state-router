@@ -1,9 +1,9 @@
-import {RouteContext} from "../router/route";
 import React from "react";
 
-export class About extends React.Component<{}, {}> {
-	static contextType = RouteContext;
+import {AboutState} from "../states/aboutState";
+import {RouteComponent} from "../router/routeComponent";
 
+export class About extends RouteComponent<AboutState> {
 	private _renders = 0;
 
 	render() {
