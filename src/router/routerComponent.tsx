@@ -4,7 +4,7 @@ import {Router} from "./router";
 import {State} from "./state";
 
 export interface IRouterContext {
-	states: State[];
+	states: State<any>[];
 	processedStates: number;
 }
 
@@ -18,7 +18,7 @@ export interface IRouterComponentProps {
 }
 
 export interface IRouterComponentState {
-	states: State[];
+	states: State<any>[];
 }
 
 export class RouterComponent extends React.Component<IRouterComponentProps, IRouterComponentState> {

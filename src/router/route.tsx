@@ -1,25 +1,25 @@
 import * as React from "react";
 
 import {RouterContext} from "./routerComponent";
-import {State} from "./state";
+import {IStateArgs, State, StateClass} from "./state";
 import {IRouteComponentProps} from "./routeComponent";
 
-export interface IRouteContext<T extends State> {
-	state: T | null;
-}
+// export interface IRouteContext<T extends State> {
+// 	state: T | null;
+// }
 
-export const RouteContext = React.createContext<IRouteContext<any>>({
-	state: null,
-});
+// export const RouteContext = React.createContext<IRouteContext<any>>({
+// 	state: null,
+// });
 
 
-export interface IRouteProps<TState extends State> {
+export interface IRouteProps<TState extends State<TArgs>, TArgs extends IStateArgs> {
 	/**
 	 * The State to try to match to the current state we are processing
 	 */
-	stateClass: new() => TState;
+	stateClass: StateClass<TArgs>;
 	// component: RouteComponent<TState, any>;
-	component: React.ComponentType<IRouteComponentProps<TState>>;
+	component: React.ComponentType<IRouteComponentProps<TState, TArgs>>;
 	/**
 	 * If exact is set to true, then this Route will only match if state is the last state to be
 	 * processed in the router's array of current states.  In other words if exact is true and there are
@@ -28,7 +28,7 @@ export interface IRouteProps<TState extends State> {
 	exact?: boolean;
 }
 
-export class Route<TState extends State> extends React.Component<IRouteProps<TState>, {}> {
+export class Route<TState extends State<TArgs>, TArgs extends IStateArgs> extends React.Component<IRouteProps<TState, TArgs>, {}> {
 	public render() {
 		const {component, stateClass, exact} = this.props;
 

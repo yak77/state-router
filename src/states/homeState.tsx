@@ -1,14 +1,22 @@
 import {router} from "../index";
 import {AboutState} from "./aboutState";
 import {PublicState} from "./publicState";
-import {State} from "../router/state";
+import {IStateArgs, State} from "../router/state";
+import {MoreInfoState} from "./moreInfoState";
 
-export class HomeState extends State {
+export interface Args extends IStateArgs {
+}
+
+export class HomeState extends State<Args> {
 	public gotoAbout() {
-		router.gotoStates(new AboutState());
+		router.gotoStates(new AboutState({}));
 	}
 
 	public gotoPublic() {
-		router.gotoStates(new PublicState());
+		router.gotoStates(new PublicState({}));
+	}
+
+	public test() {
+		// router.gotoStateClasses(PublicState, MoreInfoState, MoreInfoState, MoreInfoState);
 	}
 }

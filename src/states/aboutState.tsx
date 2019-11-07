@@ -1,4 +1,7 @@
-import {State} from "../router/state";
+import {IStateArgs, State} from "../router/state";
 
-export class AboutState extends State {
+export interface Args extends IStateArgs {
+}
+
+export class AboutState extends State<Args> {
 }

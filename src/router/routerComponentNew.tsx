@@ -6,7 +6,7 @@ import {isValidElement} from "react";
 import {isReactElement} from "./switch";
 
 export interface IRouterContext {
-	states: State[];
+	states: State<any>[];
 	processedStates: number;
 }
 
@@ -20,7 +20,7 @@ export interface IRouterComponentProps {
 }
 
 export interface IRouterComponentState {
-	states: State[];
+	states: State<any>[];
 }
 
 export class RouterComponentNew extends React.Component<IRouterComponentProps, IRouterComponentState> {

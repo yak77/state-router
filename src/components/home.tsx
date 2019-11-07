@@ -20,6 +20,10 @@ export class Home extends RouteComponent<HomeState> {
 				<button onClick={() => state.gotoPublic()}>
 					Public
 				</button>
+				<br/>
+				<button onClick={() => state.test()}>
+					Test
+				</button>
 			</div>
 		);
 	}

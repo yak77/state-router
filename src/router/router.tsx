@@ -1,7 +1,7 @@
-import {State} from "./state";
+import {State, StateClass} from "./state";
 
 export class Router {
-	private _states: State[] = [];
+	private _states: State<any>[] = [];
 
 	private _callbacks: (() => void)[] = [];
 
@@ -17,12 +17,21 @@ export class Router {
 		return this._states;
 	}
 
-	public gotoStates(...states: State[]) {
+	public gotoUrl(url: string) {
+
+	}
+
+	// public gotoStateClasses(...stateClasses: StateClass<any>[]) {
+	// 	const states = stateClasses.map((stateClass) => new stateClass());
+	// 	this.gotoStates(...states);
+	// }
+
+	public gotoStates(...states: State<any>[]) {
 		this._states = states;
 		this.statesChanged();
 	}
 
-	public pushStates(...states: State[]) {
+	public pushStates(...states: State<any>[]) {
 		this._states.push(...states);
 		this.statesChanged();
 	}

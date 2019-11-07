@@ -8,7 +8,7 @@ import {Router} from "./router/router";
 import {HomeState} from "./states/homeState";
 
 export const router = new Router();
-router.gotoStates(new HomeState());
+router.gotoStates(new HomeState({}));
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
