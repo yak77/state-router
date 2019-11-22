@@ -13,7 +13,7 @@ export class MoreInfo extends RouteComponent<MoreInfoState> {
 
 		return (
 			<div>
-				More Info: {++this._renders}
+				More Info({state.getValue()}): {++this._renders}
 				<br/>
 				<button onClick={() => state.gotoMoreInfo()}>
 					More Info

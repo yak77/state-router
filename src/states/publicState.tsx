@@ -7,6 +7,6 @@ export interface Args extends IStateArgs {
 
 export class PublicState extends State<Args> {
 	public gotoMoreInfo() {
-		router.pushStates(new MoreInfoState({}), new MoreInfoState({}));
+		router.pushStates(new MoreInfoState({x: 1}), new MoreInfoState({x: 2}));
 	}
 }
