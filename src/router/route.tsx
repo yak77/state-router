@@ -49,7 +49,7 @@ export class Route<TState extends State<TArgs>, TArgs> extends React.Component<I
 							// ***** const ___injectedUrl = state.routeInfo.location.pathname;
 							return <RouterContext.Provider
 								value={{
-									states: routerContext.states,
+									...routerContext,
 									processedStates: routerContext.processedStates + 1,
 								}}
 							>

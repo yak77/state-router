@@ -16,6 +16,10 @@ export class Public extends RouteComponent<PublicState> {
 			<div>
 				Public: {++this._renders}
 				<br/>
+				<button onClick={state.gotoHome}>Home</button>
+				<br/>
+				<br/>
+				<br/>
 				<button onClick={() => state.gotoMoreInfo()}>
 					More Info
 				</button>

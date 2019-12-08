@@ -1,15 +1,15 @@
 import React from "react";
 
-import {AboutState} from "../states/aboutState";
 import {RouteComponent} from "../router/routeComponent";
+import {PrivateState} from "../states/privateState";
 
-export class About extends RouteComponent<AboutState> {
+export class Private extends RouteComponent<PrivateState> {
 	private _renders = 0;
 
 	render() {
 		return (
 			<div>
-				About: {++this._renders}
+				Private: {++this._renders}
 				<br/>
 				<button onClick={this.props.state.gotoHome}>Home</button>
 			</div>

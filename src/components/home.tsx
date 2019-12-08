@@ -13,6 +13,10 @@ export class Home extends RouteComponent<HomeState> {
 			<div>
 				Home: {++this._renders}
 				<br/>
+				<button onClick={() => state.gotoLogin()}>
+					Login
+				</button>
+				<br/>
 				<button onClick={() => state.gotoAbout()}>
 					About
 				</button>
@@ -21,8 +25,8 @@ export class Home extends RouteComponent<HomeState> {
 					Public
 				</button>
 				<br/>
-				<button onClick={() => state.test()}>
-					Test
+				<button onClick={() => state.gotoPrivate()}>
+					Private
 				</button>
 			</div>
 		);

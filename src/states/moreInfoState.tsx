@@ -1,11 +1,16 @@
 import {router} from "../index";
 import {IStateArgs, State} from "../router/state";
+import {LoggingState} from "./loggingState";
 
 export interface Args extends IStateArgs {
 	x: number;
 }
 
-export class MoreInfoState extends State<Args> {
+export class MoreInfoState extends LoggingState<Args> {
+	constructor(args: Args) {
+		super("MoreInfoState", args);
+	}
+
 	public getValue() {
 		return this.args.x;
 	}
