@@ -1,4 +1,4 @@
-import {IStateArgs, State} from "../router/state";
+import {State} from "../router/state";
 
 export class LoggingState<TArgs> extends State<TArgs> {
 	constructor(protected _name: string, args: TArgs) {

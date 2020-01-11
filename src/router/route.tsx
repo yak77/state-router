@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {RouterContext} from "./routerComponent";
-import {IStateArgs, State, StateClass} from "./state";
+import {State, StateClass} from "./state";
 import {IRouteComponentProps} from "./routeComponent";
 
 // export interface IRouteContext<T extends State> {

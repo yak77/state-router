@@ -1,5 +1,4 @@
 import React from "react";
-import {IStateArgs, State} from "./state";
 
 // export type RouteComponentProps<TState> = TState extends State<infer TArgs>
 // 	? {

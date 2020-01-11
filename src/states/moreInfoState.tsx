@@ -1,5 +1,5 @@
 import {router} from "../index";
-import {IStateArgs, State} from "../router/state";
+import {IStateArgs} from "../router/state";
 import {LoggingState} from "./loggingState";
 
 export interface Args extends IStateArgs {

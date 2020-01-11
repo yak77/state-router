@@ -1,12 +1,11 @@
 import {router} from "../index";
 import {AboutState} from "./aboutState";
 import {PublicState} from "./publicState";
-import {IStateArgs, State} from "../router/state";
-import {MoreInfoState} from "./moreInfoState";
+import {IStateArgs} from "../router/state";
 import {LoggingState} from "./loggingState";
 import {PrivateState} from "./privateState";
-import {Login} from "../components/login";
 import {LoginState} from "./loginState";
+import {MemoryTestState} from "./memoryTestState";
 
 export interface Args extends IStateArgs {
 }
@@ -35,5 +34,10 @@ export class HomeState extends LoggingState<Args> {
 		const result = await router.gotoStates(new PrivateState());
 		console.log("gotoPrivate result: " + result);
 		// router.gotoStateClasses(PublicState, MoreInfoState, MoreInfoState, MoreInfoState);
+	}
+
+	public async gotoMemoryTest() {
+		const result = await router.gotoStates(new MemoryTestState({}));
+		console.log("gotoPublic result: " + result);
 	}
 }

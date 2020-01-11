@@ -1,5 +1,4 @@
 import {router} from "../index";
-import {MoreInfoState} from "./moreInfoState";
 import {IStateArgs} from "../router/state";
 import {HomeState} from "./homeState";
 import {LoggingState} from "./loggingState";
@@ -7,16 +6,16 @@ import {LoggingState} from "./loggingState";
 export interface Args extends IStateArgs {
 }
 
-export class PublicState extends LoggingState<Args> {
+export class MemoryTestState extends LoggingState<Args> {
+	private _data: number[] = [];
+
 	constructor(args: Args = {}) {
-		super("PublicState", args);
+		super("MemoryTestState", args);
+
+		this._data.length = 2000000;
 	}
 
 	public gotoHome() {
 		router.gotoStates(new HomeState({}));
-	}
-
-	public gotoMoreInfo() {
-		router.pushStates(new MoreInfoState({x: 1}), new MoreInfoState({x: 2}));
 	}
 }

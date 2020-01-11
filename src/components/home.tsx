@@ -13,6 +13,10 @@ export class Home extends RouteComponent<HomeState> {
 			<div>
 				Home: {++this._renders}
 				<br/>
+				<button onClick={() => state.gotoMemoryTest()}>
+					Memory Test
+				</button>
+				<br/>
 				<button onClick={() => state.gotoLogin()}>
 					Login
 				</button>

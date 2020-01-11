@@ -1,4 +1,4 @@
-import {IStateArgs, State} from "../router/state";
+import {IStateArgs} from "../router/state";
 import {router} from "../index";
 import {HomeState} from "./homeState";
 import {LoggingState} from "./loggingState";

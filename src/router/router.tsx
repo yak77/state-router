@@ -1,4 +1,4 @@
-import {State, StateClass} from "./state";
+import {State} from "./state";
 
 export class Router {
 	private _states: State<any>[] = [];
