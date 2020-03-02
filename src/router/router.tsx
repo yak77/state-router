@@ -1,16 +1,25 @@
 import {State} from "./state";
 
+export interface IRouterEvents {
+	stateChangeStart?: () => void;
+	stateChangeDone?: (result: boolean) => void;
+}
+
 export class Router {
 	private _states: State<any>[] = [];
 
-	private _callbacks: (() => void)[] = [];
+	private _callbacks: IRouterEvents[] = [];
 
-	public registerForStateChange(callback: () => void) {
-		this._callbacks.push(callback);
+	public registerForEvents(routerEventHandler: IRouterEvents) {
+		this._callbacks.push(routerEventHandler);
 	}
 
-	protected statesChanged() {
-		this._callbacks.forEach(callback => callback());
+	protected stateChangeStart() {
+		this._callbacks.forEach(handler => handler.stateChangeStart && handler.stateChangeStart());
+	}
+
+	protected stateChangeDone(result: boolean) {
+		this._callbacks.forEach(handler => handler.stateChangeDone && handler.stateChangeDone(result));
 	}
 
 	public getStates() {
@@ -23,51 +32,49 @@ export class Router {
 	// }
 
 	public async gotoStates(...states: State<any>[]): Promise<boolean> {
+		this.stateChangeStart();
+		const result = await this.internalGotoStates(states);
+		this.stateChangeDone(result);
+
+		return result;
+	}
+
+	protected async internalGotoStates(states: State<any>[]): Promise<boolean> {
 		const numMatchedStates = this.getNumMatchedStates(states);
 
 		for (let i = this._states.length - 1; i >= numMatchedStates; --i) {
-			if (!await this._states[i].canExit()) {
+			if (!await this._states[i].willExit()) {
 				return false;
 			}
 		}
 
 		const newStates = states.slice(numMatchedStates);
 		for (let i = 0; i < newStates.length; ++i) {
-			const result = await newStates[i].canEnter();
+			const result = await newStates[i].willEnter();
 			if (typeof result === "boolean") {
 				if (!result) {
 					return false;
 				}
 			} else {
 				// we have a redirect
-				return this.gotoStates(...result.states);
-			}
-			if (!await newStates[i].canEnter()) {
-				return false;
+				return await this.gotoStates(...result.states);
 			}
 		}
 
 		for (let i = this._states.length - 1; i >= numMatchedStates; --i) {
-			if (!await this._states[i].onExit()) {
-				return false;
-			}
+			await this._states[i].didExit();
 		}
 
 		const preservedStates = this._states.slice(0, numMatchedStates);
 		for (let i = 0; i < preservedStates.length; ++i) {
-			if (!await preservedStates[i].onRetain()) {
-				return false;
-			}
+			await preservedStates[i].didRetain();
 		}
 
 		for (let i = 0; i < newStates.length; ++i) {
-			if (!await newStates[i].onEnter()) {
-				return false;
-			}
+			await newStates[i].didEnter();
 		}
 
 		this._states = [...preservedStates, ...newStates];
-		this.statesChanged();
 
 		return true;
 	}

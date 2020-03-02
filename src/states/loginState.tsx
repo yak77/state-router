@@ -15,10 +15,6 @@ export class LoginState extends LoggingState<Args> {
 		super("LoginState", args);
 	}
 
-	public async onEnter(): Promise<boolean> {
-		return super.onEnter();
-	}
-
 	public login() {
 		userStore.login();
 		if (this.args.from) {

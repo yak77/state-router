@@ -2,6 +2,7 @@ import {IStateArgs} from "../router/state";
 import {router} from "../index";
 import {HomeState} from "./homeState";
 import {LoggingState} from "./loggingState";
+import {IRedirect} from "../router/redirect";
 
 export interface Args extends IStateArgs {
 }
@@ -11,9 +12,10 @@ export class AboutState extends LoggingState<Args> {
 		super("AboutState", args);
 	}
 
-	async onEnter(): Promise<boolean> {
-		super.onEnter();
-		return false;
+	async willEnter(): Promise<boolean | IRedirect> {
+		const result = super.willEnter();
+		return result; // false;
+		// return false;
 	}
 
 	public gotoHome() {

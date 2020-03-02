@@ -7,24 +7,21 @@ export class State<TArgs extends IStateArgs> {
 	constructor(protected args: TArgs) {
 	}
 
-	public async canEnter(): Promise<boolean | IRedirect> {
+	public async willEnter(): Promise<boolean | IRedirect> {
 		return true;
 	}
 
-	public async onEnter(): Promise<boolean> {
+	public async didEnter(): Promise<void> {
+	}
+
+	public async didRetain(): Promise<void> {
+	}
+
+	public async willExit(): Promise<boolean> {
 		return true;
 	}
 
-	public async onRetain(): Promise<boolean> {
-		return true;
-	}
-
-	public async canExit(): Promise<boolean> {
-		return true;
-	}
-
-	public async onExit(): Promise<boolean> {
-		return true;
+	public async didExit(): Promise<void> {
 	}
 }
 

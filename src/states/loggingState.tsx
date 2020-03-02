@@ -1,4 +1,5 @@
 import {State} from "../router/state";
+import {IRedirect} from "../router/redirect";
 
 export class LoggingState<TArgs> extends State<TArgs> {
 	constructor(protected _name: string, args: TArgs) {
@@ -9,23 +10,28 @@ export class LoggingState<TArgs> extends State<TArgs> {
 		console.log(this._name + ": " + msg);
 	}
 
-	public async canExit(): Promise<boolean> {
-		console.log(this._name + ".canExit");
-		return super.canExit();
+	public async willEnter(): Promise<boolean | IRedirect> {
+		console.log(this._name + ".willEnter");
+		return super.willEnter();
 	}
 
-	public async onExit(): Promise<boolean> {
-		console.log(this._name + ".onExit");
-		return super.onExit();
+	public async willExit(): Promise<boolean> {
+		console.log(this._name + ".willExit");
+		return super.willExit();
 	}
 
-	public async onRetain(): Promise<boolean> {
-		console.log(this._name + ".onRetain");
-		return super.onRetain();
+	public async didExit(): Promise<void> {
+		console.log(this._name + ".didExit");
+		super.didExit();
 	}
 
-	public async onEnter(): Promise<boolean> {
-		console.log(this._name + ".onEnter");
-		return super.onEnter();
+	public async didRetain(): Promise<void> {
+		console.log(this._name + ".didRetain");
+		super.didRetain();
+	}
+
+	public async didEnter(): Promise<void> {
+		console.log(this._name + ".didEnter");
+		super.didEnter();
 	}
 }

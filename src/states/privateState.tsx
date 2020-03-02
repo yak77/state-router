@@ -14,19 +14,19 @@ export class PrivateState extends LoggingState<Args> {
 		super("PrivateState", args);
 	}
 
-	public async canEnter(): Promise<boolean | IRedirect> {
+	public async willEnter(): Promise<boolean | IRedirect> {
 		if (!userStore.isUserLoggedIn()) {
 			return redirect(new LoginState({from: [this]}));
 		}
 
-		return true;
+		return super.willEnter();
 	}
 
-	public async onEnter(): Promise<boolean> {
-		this.log("onEnter");
-
-		return userStore.isUserLoggedIn();
-	}
+	// public async onEnter(): Promise<boolean> {
+	// 	this.log("onEnter");
+	//
+	// 	return userStore.isUserLoggedIn();
+	// }
 
 	public gotoHome() {
 		router.gotoStates(new HomeState({}));

@@ -33,8 +33,10 @@ export class RouterComponent extends React.Component<IRouterComponentProps, IRou
 	public componentDidMount(): void {
 		// todo: better way to update instead of using forceUpdate?
 		// this.props.router.registerForStateChange(() => this.forceUpdate());
-		this.props.router.registerForStateChange(() => {
-			this.setState({states: this.props.router.getStates()});
+		this.props.router.registerForEvents({
+			stateChangeDone: (result) => {
+				this.setState({states: this.props.router.getStates()});
+			}
 		});
 	}
 
