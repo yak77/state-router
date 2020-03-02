@@ -3,6 +3,7 @@ import {State} from "./state";
 export interface IRouterEvents {
 	stateChangeStart?: () => void;
 	stateChangeDone?: (result: boolean) => void;
+	statesChanged?: () => void;
 }
 
 export class Router {
@@ -24,6 +25,11 @@ export class Router {
 
 	public getStates() {
 		return this._states;
+	}
+
+	protected setStates(states: State<any>[]) {
+		this._states = states;
+		this._callbacks.forEach(handler => handler.statesChanged && handler.statesChanged());
 	}
 
 	// public gotoStateClasses(...stateClasses: StateClass<any>[]) {
@@ -74,7 +80,7 @@ export class Router {
 			await newStates[i].didEnter();
 		}
 
-		this._states = [...preservedStates, ...newStates];
+		this.setStates([...preservedStates, ...newStates]);
 
 		return true;
 	}
